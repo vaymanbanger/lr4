@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Кофейный котик — уютная кофейня для ценителей</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ===== Сброс и базовые стили ===== */
+  *, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  :root {
+    --coffee-dark: #3E2723;
+    --coffee-brown: #6F4E37;
+    --coffee-medium: #8B5E3C;
+    --caramel: #C9A66B;
+    --cream: #FAF3E7;
+    --beige: #F5E6D3;
+    --beige-light: #FDF8F1;
+    --white: #FFFFFF;
+    --shadow-soft: 0 10px 30px rgba(62, 39, 35, 0.08);
+    --shadow-hover: 0 20px 50px rgba(62, 39, 35, 0.18);
+    --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+  }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--coffee-dark);
+    background: var(--beige-light);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  section {
+    padding: 100px 0;
+  }
+
+  .section-title {
+    text-align: center;
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--coffee-dark);
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .section-subtitle {
+    text-align: center;
+    color: var(--coffee-medium);
+    font-size: 1.1rem;
+    margin-bottom: 60px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: var(--caramel);
+    margin: 16px auto 0;
+    border-radius: 2px;
+  }
+
+  /* ===== Навигация ===== */
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(253, 248, 241, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 2px 20px rgba(62, 39, 35, 0.06);
+    transition: var(--transition);
+  }
+
+  .nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--coffee-dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .logo-icon {
+    font-size: 1.8rem;
+    filter: drop-shadow(0 2px 4px rgba(62, 39, 35, 0.2));
+  }
+
+  .nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 36px;
+  }
+
+  .nav-menu a {
+    color: var(--coffee-dark);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    position: relative;
+    padding: 6px 0;
+    transition: var(--transition);
+  }
+
+  .nav-menu a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: var(--caramel);
+    transition: width 0.3s ease;
+  }
+
+  .nav-menu a:hover {
+    color: var(--caramel);
+  }
+
+  .nav-menu a:hover::after {
+    width: 100%;
+  }
+
+  .burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 8px;
+  }
+
+  .burger span {
+    width: 26px;
+    height: 2px;
+    background: var(--coffee-dark);
+    border-radius: 2px;
+    transition: var(--transition);
+  }
+
+  /* ===== Hero ===== */
+  .hero {
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background:
+      radial-gradient(ellipse at top left, rgba(201, 166, 107, 0.25), transparent 60%),
+      radial-gradient(ellipse at bottom right, rgba(111, 78, 55, 0.15), transparent 60%),
+      linear-gradient(135deg, var(--beige) 0%, var(--cream) 100%);
+    position: relative;
+    overflow: hidden;
+    padding: 120px 24px 80px;
+  }
+
+  .hero::before {
+    content: '☕';
+    position: absolute;
+    font-size: 25rem;
+    opacity: 0.05;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    animation: fadeInUp 1s ease-out;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.7);
+    color: var(--coffee-brown);
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    margin-bottom: 24px;
+    border: 1px solid rgba(201, 166, 107, 0.3);
+  }
+
+  .hero h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    color: var(--coffee-dark);
+    margin-bottom: 24px;
+    letter-spacing: -1px;
+  }
+
+  .hero h1 span {
+    color: var(--caramel);
+    font-style: italic;
+  }
+
+  .hero p {
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    color: var(--coffee-medium);
+    margin-bottom: 40px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 16px 40px;
+    background: var(--coffee-brown);
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 8px 24px rgba(111, 78, 55, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+  }
+
+  .btn:hover::before {
+    width: 400px;
+    height: 400px;
+  }
+
+  .btn:hover {
+    background: var(--coffee-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(62, 39, 35, 0.4);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--coffee-brown);
+    border: 2px solid var(--coffee-brown);
+    box-shadow: none;
+    margin-left: 12px;
+  }
+
+  .btn-secondary:hover {
+    background: var(--coffee-brown);
+    color: var(--white);
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ===== О нас ===== */
+  .about {
+    background: var(--white);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .about-image {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 20px;
+    background:
+      linear-gradient(135deg, var(--caramel) 0%, var(--coffee-brown) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+    transition: var(--transition);
+  }
+
+  .about-image:hover {
+    transform: scale(1.02);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .about-image::before {
+    content: '🐱';
+    font-size: 10rem;
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+  }
+
+  .about-image::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.15) 50%, transparent 60%);
+    animation: shine 6s infinite;
+  }
+
+  @keyframes shine {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  .about-text h2 {
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    margin-bottom: 20px;
+    color: var(--coffee-dark);
+  }
+
+  .about-text p {
+    color: var(--coffee-medium);
+    margin-bottom: 18px;
+    font-size: 1.05rem;
+  }
+
+  .about-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 30px;
+  }
+
+  .feature {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    background: var(--beige-light);
+    border-radius: 12px;
+    transition: var(--transition);
+  }
+
+  .feature:hover {
+    background: var(--beige);
+    transform: translateX(5px);
+  }
+
+  .feature-icon {
+    font-size: 1.6rem;
+  }
+
+  .feature-text {
+    font-weight: 500;
+    color: var(--coffee-dark);
+    font-size: 0.95rem;
+  }
+
+  /* ===== Меню ===== */
+  .menu {
+    background: var(--beige-light);
+  }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+
+  .menu-card {
+    background: var(--white);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+    transition: var(--transition);
+    cursor: pointer;
+    position: relative;
+  }
+
+  .menu-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .menu-card-image {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition);
+  }
+
+  .menu-card:nth-child(1) .menu-card-image { background: linear-gradient(135deg, #D4A574, #8B5E3C); }
+  .menu-card:nth-child(2) .menu-card-image { background: linear-gradient(135deg, #E8C39E, #A0785A); }
+  .menu-card:nth-child(3) .menu-card-image { background: linear-gradient(135deg, #F5D5A0, #C9A66B); }
+  .menu-card:nth-child(4) .menu-card-image { background: linear-gradient(135deg, #6F4E37, #3E2723); }
+  .menu-card:nth-child(5) .menu-card-image { background: linear-gradient(135deg, #8B5E3C, #4A2E1F); }
+  .menu-card:nth-child(6) .menu-card-image { background: linear-gradient(135deg, #A8C99B, #6B8E5A); }
+
+  .menu-card:hover .menu-card-image {
+    transform: scale(1.05);
+  }
+
+  .menu-card-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.1) 100%);
+  }
+
+  .menu-card-body {
+    padding: 24px;
+  }
+
+  .menu-card-title {
+    font-size: 1.4rem;
+    color: var(--coffee-dark);
+    margin-bottom: 8px;
+  }
+
+  .menu-card-desc {
+    color: var(--coffee-medium);
+    font-size: 0.9rem;
+    margin-bottom: 16px;
+    min-height: 42px;
+  }
+
+  .menu-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .menu-card-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--caramel);
+  }
+
+  .menu-card-btn {
+    background: var(--beige);
+    color: var(--coffee-dark);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .menu-card-btn:hover {
+    background: var(--coffee-brown);
+    color: var(--white);
+  }
+
+  /* ===== Акции ===== */
+  .promos {
+    background: linear-gradient(135deg, var(--beige) 0%, var(--cream) 100%);
+  }
+
+  .promo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+
+  .promo-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 40px 30px;
+    text-align: center;
+    box-shadow: var(--shadow-soft);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    border: 2px solid transparent;
+  }
+
+  .promo-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--caramel), var(--coffee-brown));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .promo-card:hover::before {
+    transform: scaleX(1);
+  }
+
+  .promo-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--caramel);
+  }
+
+  .promo-icon {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    display: inline-block;
+    transition: var(--transition);
+  }
+
+  .promo-card:hover .promo-icon {
+    transform: scale(1.15) rotate(-5deg);
+  }
+
+  .promo-title {
+    font-size: 1.5rem;
+    color: var(--coffee-dark);
+    margin-bottom: 12px;
+  }
+
+  .promo-desc {
+    color: var(--coffee-medium);
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+  }
+
+  .promo-badge {
+    display: inline-block;
+    background: var(--caramel);
+    color: var(--white);
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  /* ===== Бонусная программа ===== */
+  .loyalty {
+    background: var(--white);
+  }
+
+  .loyalty-intro {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 60px;
+    color: var(--coffee-medium);
+    font-size: 1.1rem;
+  }
+
+  .loyalty-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-bottom: 60px;
+  }
+
+  .loyalty-step {
+    text-align: center;
+    padding: 40px 24px;
+    background: var(--beige-light);
+    border-radius: 20px;
+    transition: var(--transition);
+    position: relative;
+  }
+
+  .loyalty-step:hover {
+    background: var(--beige);
+    transform: translateY(-5px);
+  }
+
+  .step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--caramel), var(--coffee-brown));
+    color: var(--white);
+    border-radius: 50%;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 20px rgba(201, 166, 107, 0.3);
+  }
+
+  .step-title {
+    font-size: 1.4rem;
+    color: var(--coffee-dark);
+    margin-bottom: 12px;
+  }
+
+  .step-desc {
+    color: var(--coffee-medium);
+    font-size: 0.95rem;
+  }
+
+  .loyalty-levels {
+    background: linear-gradient(135deg, var(--coffee-dark) 0%, var(--coffee-brown) 100%);
+    border-radius: 24px;
+    padding: 50px 40px;
+    color: var(--white);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    box-shadow: var(--shadow-hover);
+  }
+
+  .level {
+    text-align: center;
+    padding: 20px;
+    border-radius: 16px;
+    transition: var(--transition);
+  }
+
+  .level:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: scale(1.03);
+  }
+
+  .level-icon {
+    font-size: 2.5rem;
+    margin-bottom: 12px;
+  }
+
+  .level-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    color: var(--caramel);
+    margin-bottom: 8px;
+  }
+
+  .level-bonus {
+    font-size: 0.95rem;
+    opacity: 0.9;
+  }
+
+  /* ===== Контакты ===== */
+  .contacts {
+    background: var(--beige-light);
+  }
+
+  .contacts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+
+  .contact-info {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--beige);
+    transition: var(--transition);
+  }
+
+  .contact-item:last-child {
+    border-bottom: none;
+  }
+
+  .contact-item:hover {
+    padding-left: 10px;
+  }
+
+  .contact-icon {
+    font-size: 1.8rem;
+    width: 50px;
+    height: 50px;
+    background: var(--beige);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: var(--transition);
+  }
+
+  .contact-item:hover .contact-icon {
+    background: var(--caramel);
+    transform: rotate(-5deg);
+  }
+
+  .contact-label {
+    font-size: 0.85rem;
+    color: var(--coffee-medium);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+
+  .contact-value {
+    font-size: 1.1rem;
+    color: var(--coffee-dark);
+    font-weight: 500;
+  }
+
+  .contact-map {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+    position: relative;
+    min-height: 400px;
+    background:
+      linear-gradient(135deg, var(--beige) 0%, var(--cream) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+  }
+
+  .contact-map:hover {
+    transform: scale(1.01);
+  }
+
+  .map-placeholder {
+    text-align: center;
+    padding: 40px;
+  }
+
+  .map-pin {
+    font-size: 5rem;
+    margin-bottom: 20px;
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+
+  .map-address {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    color: var(--coffee-dark);
+    margin-bottom: 10px;
+  }
+
+  .map-hint {
+    color: var(--coffee-medium);
+    font-size: 0.95rem;
+  }
+
+  /* ===== Футер ===== */
+  .footer {
+    background: var(--coffee-dark);
+    color: var(--beige);
+    padding: 40px 0 24px;
+    text-align: center;
+  }
+
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--caramel);
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 16px;
+  }
+
+  .social-link {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: var(--transition);
+  }
+
+  .social-link:hover {
+    background: var(--caramel);
+    transform: translateY(-3px);
+  }
+
+  .footer-copy {
+    font-size: 0.85rem;
+    opacity: 0.7;
+    margin-top: 10px;
+  }
+
+  /* ===== Анимации ===== */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ===== Адаптивность ===== */
+  @media (max-width: 992px) {
+    .menu-grid,
+    .promo-grid,
+    .loyalty-steps,
+    .loyalty-levels {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .about-image {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+  }
+
+  @media (max-width: 768px) {
+    section {
+      padding: 70px 0;
+    }
+
+    .nav-menu {
+      position: fixed;
+      top: 72px;
+      left: 0;
+      right: 0;
+      background: var(--beige-light);
+      flex-direction: column;
+      padding: 30px;
+      gap: 20px;
+      transform: translateY(-150%);
+      transition: transform 0.4s ease;
+      box-shadow: 0 10px 30px rgba(62, 39, 35, 0.1);
+    }
+
+    .nav-menu.active {
+      transform: translateY(0);
+    }
+
+    .burger {
+      display: flex;
+    }
+
+    .burger.active span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .burger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .burger.active span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .menu-grid,
+    .promo-grid,
+    .loyalty-steps,
+    .loyalty-levels,
+    .contacts-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .about-features {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-buttons {
+      flex-direction: column;
+      width: 100%;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+
+    .btn-secondary {
+      margin-left: 0;
+    }
+
+    .btn {
+      width: 100%;
+    }
+
+    .loyalty-levels {
+      padding: 30px 20px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero {
+      padding: 100px 20px 60px;
+    }
+
+    .contact-info {
+      padding: 24px;
+    }
+
+    .promo-card {
+      padding: 30px 20px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Навигация -->
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="#home" class="logo">
+      <span class="logo-icon">🐱</span>
+      <span>Кофейный котик</span>
+    </a>
+    <ul class="nav-menu" id="navMenu">
+      <li><a href="#home">Главная</a></li>
+      <li><a href="#about">О нас</a></li>
+      <li><a href="#menu">Меню</a></li>
+      <li><a href="#promos">Акции</a></li>
+      <li><a href="#loyalty">Бонусы</a></li>
+      <li><a href="#contacts">Контакты</a></li>
+    </ul>
+    <button class="burger" id="burger" aria-label="Меню">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="home">
+  <div class="hero-content">
+    <span class="hero-badge">✨ УЮТ В КАЖДОЙ ЧАШКЕ</span>
+    <h1>Кофе, который <span>мурлычет</span><br>от удовольствия</h1>
+    <p>Авторские напитки, тёплая атмосфера и пушистые бариста — всё, что нужно для идеального утра или уютного вечера в компании любимой книги.</p>
+    <div class="hero-buttons">
+      <a href="#menu" class="btn">Посмотреть меню</a>
+      <a href="#contacts" class="btn btn-secondary">Как нас найти</a>
+    </div>
+  </div>
+</section>
+
+<!-- О нас -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-image"></div>
+      <div class="about-text">
+        <h2>Наша история</h2>
+        <p>«Кофейный котик» появился в 2019 году из простой идеи: создать место, где кофе — это не просто напиток, а настоящее маленькое путешествие. Всё началось с маленького кота по имени Мурчик, который каждое утро встречал гостей у входа.</p>
+        <p>Сегодня мы — уютная кофейня с авторскими напитками, свежей выпечкой и настоящей кошачьей атмосферой. Каждое зерно мы обжариваем сами, а каждый рецепт создаём с любовью и щепоткой кошачьего любопытства.</p>
+        <div class="about-features">
+          <div class="feature">
+            <span class="feature-icon">🌱</span>
+            <span class="feature-text">Своя обжарка</span>
+          </div>
+          <div class="feature">
+            <span class="feature-icon">🥛</span>
+            <span class="feature-text">Фермерское молоко</span>
+          </div>
+          <div class="feature">
+            <span class="feature-icon">🍰</span>
+            <span class="feature-text">Свежая выпечка</span>
+          </div>
+          <div class="feature">
+            <span class="feature-icon">💛</span>
+            <span class="feature-text">С любовью</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Меню -->
+<section class="menu" id="menu">
+  <div class="container">
+    <h2 class="section-title">Наши фирменные напитки</h2>
+    <p class="section-subtitle">Шесть вкусов, которые покорили сердца наших гостей и стали визитной карточкой кофейни</p>
+    <div class="menu-grid">
+      <div class="menu-card">
+        <div class="menu-card-image">☕</div>
+        <div class="menu-card-body">
+          <h3 class="menu-card-title">Мурр-чино</h3>
+          <p class="menu-card-desc">Нежный капучино с карамельной пенкой и ноткой ванили</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">290 ₽</span>
+            <button class="menu-card-btn">Подробнее</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-image">🥛</div>
+        <div class="menu-card-body">
+          <h3 class="menu-card-title">Котик-латте</h3>
+          <p class="menu-card-desc">Латте с лавандовым сиропом и арт-рисунком в виде котика</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">320 ₽</span>
+            <button class="menu-card-btn">Подробнее</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-image">🍯</div>
+        <div class="menu-card-body">
+          <h3 class="menu-card-title">Мокрый носик</h3>
+          <p class="menu-card-desc">Сливочный раф с мёдом, корицей и щепоткой мускатного ореха</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">350 ₽</span>
+            <button class="menu-card-btn">Подробнее</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-image">⚡</div>
+        <div class="menu-card-body">
+          <h3 class="menu-card-title">Бодрый хвостик</h3>
+          <p class="menu-card-desc">Крепкий эспрессо из зёрен собственной обжарки</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">180 ₽</span>
+            <button class="menu-card-btn">Подробнее</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-image">🍫</div>
+        <div class="menu-card-body">
+          <h3 class="menu-card-title">Шоко-лапка</h3>
+          <p class="menu-card-desc">Бархатный мокко с бельгийским шоколадом и маршмеллоу</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">340 ₽</span>
+            <button class="menu-card-btn">Подробнее</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-image">🍵</div>
+        <div class="menu-card-body">
+          <h3 class="menu-card-title">Зеленые глазки</h3>
+          <p class="menu-card-desc">Матча-латте на овсяном молоке с кокосовым сиропом</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">360 ₽</span>
+            <button class="menu-card-btn">Подробнее</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Акции -->
+<section class="promos" id="promos">
+  <div class="container">
+    <h2 class="section-title">Акции и спецпредложения</h2>
+    <p class="section-subtitle">Приятные бонусы для наших любимых гостей — чтобы каждое посещение было ещё приятнее</p>
+    <div class="promo-grid">
+      <div class="promo-card">
+        <span class="promo-icon">🌅</span>
+        <h3 class="promo-title">Доброе утро</h3>
+        <p class="promo-desc">С 7:00 до 10:00 любой кофе + круассан со скидкой 20%. Идеальное начало дня!</p>
+        <span class="promo-badge">КАЖДЫЙ ДЕНЬ</span>
+      </div>
+      <div class="promo-card">
+        <span class="promo-icon">👯</span>
+        <h3 class="promo-title">Приведи друга</h3>
+        <p class="promo-desc">Приходите вдвоём — второй напиток в подарок. Дружба согревает лучше кофе.</p>
+        <span class="promo-badge">ПО СРЕДАМ</span>
+      </div>
+      <div class="promo-card">
+        <span class="promo-icon">🎂</span>
+        <h3 class="promo-title">День рождения</h3>
+        <p class="promo-desc">В ваш день рождения — десерт и фирменный напиток в подарок. Праздник у нас!</p>
+        <span class="promo-badge">-7 / +7 ДНЕЙ</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Бонусная программа -->
+<section class="loyalty" id="loyalty">
+  <div class="container">
+    <h2 class="section-title">Бонусная программа</h2>
+    <p class="section-subtitle">Копите «кошачьи лапки» и получайте приятные подарки от нашей кофейни</p>
+
+    <div class="loyalty-steps">
+      <div class="loyalty-step">
+        <div class="step-number">1</div>
+        <h3 class="step-title">Регистрация</h3>
+        <p class="step-desc">Скачайте наше приложение или получите карту в кофейне — это бесплатно и займёт минуту.</p>
+      </div>
+      <div class="loyalty-step">
+        <div class="step-number">2</div>
+        <h3 class="step-title">Копите лапки</h3>
+        <p class="step-desc">За каждые 100 ₽ покупки вы получаете 1 лапку. Лапки никогда не сгорают.</p>
+      </div>
+      <div class="loyalty-step">
+        <div class="step-number">3</div>
+        <h3 class="step-title">Тратьте с удовольствием</h3>
+        <p class="step-desc">1 лапка = 1 ₽. Оплачивайте до 50% заказа бонусами и получайте подарки.</p>
+      </div>
+    </div>
+
+    <div class="loyalty-levels">
+      <div class="level">
+        <div class="level-icon">🐾</div>
+        <h3 class="level-name">Котёнок</h3>
+        <p class="level-bonus">Старт программы<br>Кэшбэк 5%</p>
+      </div>
+      <div class="level">
+        <div class="level-icon">🐱</div>
+        <h3 class="level-name">Котик</h3>
+        <p class="level-bonus">От 1000 лапок<br>Кэшбэк 7% + подарок</p>
+      </div>
+      <div class="level">
+        <div class="level-icon">👑</div>
+        <h3 class="level-name">Мурзик VIP</h3>
+        <p class="level-bonus">От 3000 лапок<br>Кэшбэк 10% + приоритет</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Контакты -->
+<section class="contacts" id="contacts">
+  <div class="container">
+    <h2 class="section-title">Как нас найти</h2>
+    <p class="section-subtitle">Мы всегда рады видеть вас — заходите на чашечку ароматного кофе!</p>
+    <div class="contacts-grid">
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-label">Адрес</div>
+            <div class="contact-value">ул. Кошачья, 12<br>Москва, м. Чистые пруды</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🕐</div>
+          <div>
+            <div class="contact-label">Часы работы</div>
+            <div class="contact-value">Пн–Пт: 7:00 – 22:00<br>Сб–Вс: 9:00 – 23:00</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div>
+            <div class="contact-label">Телефон</div>
+            <div class="contact-value">+7 (495) 123-45-67</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">✉️</div>
+          <div>
+            <div class="contact-label">Email</div>
+            <div class="contact-value">hello@coffeekotik.ru</div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-map">
+        <div class="map-placeholder">
+          <div class="map-pin">📍</div>
+          <div class="map-address">ул. Кошачья, 12</div>
+          <div class="map-hint">5 минут от метро Чистые пруды</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Футер -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-logo">🐱 Кофейный котик</div>
+      <div class="footer-social">
+        <a href="#" class="social-link" aria-label="Instagram">📷</a>
+        <a href="#" class="social-link" aria-label="Telegram">✈️</a>
+        <a href="#" class="social-link" aria-label="VK">💬</a>
+      </div>
+      <p class="footer-copy">© 2026 Кофейный котик. Все права защищены. Сделано с любовью ☕</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Мобильное меню
+  const burger = document.getElementById('burger');
+  const navMenu = document.getElementById('navMenu');
+
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('active');
+    navMenu.classList.toggle('active');
+  });
+
+  // Закрытие меню при клике на ссылку
+  document.querySelectorAll('.nav-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+      burger.classList.remove('active');
+      navMenu.classList.remove('active');
+    });
+  });
+</script>
+
+</body>
+</html>
