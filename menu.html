@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Меню — Кофейный котик</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ===== Сброс и базовые стили ===== */
+  *, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  :root {
+    --coffee-dark: #3E2723;
+    --coffee-brown: #6F4E37;
+    --coffee-medium: #8B5E3C;
+    --caramel: #C9A66B;
+    --cream: #FAF3E7;
+    --beige: #F5E6D3;
+    --beige-light: #FDF8F1;
+    --white: #FFFFFF;
+    --shadow-soft: 0 10px 30px rgba(62, 39, 35, 0.08);
+    --shadow-hover: 0 20px 50px rgba(62, 39, 35, 0.18);
+    --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+  }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--coffee-dark);
+    background: var(--beige-light);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  section {
+    padding: 100px 0;
+  }
+
+  .section-title {
+    text-align: center;
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--coffee-dark);
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .section-subtitle {
+    text-align: center;
+    color: var(--coffee-medium);
+    font-size: 1.1rem;
+    margin-bottom: 60px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: var(--caramel);
+    margin: 16px auto 0;
+    border-radius: 2px;
+  }
+
+  /* ===== Навигация ===== */
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(253, 248, 241, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 2px 20px rgba(62, 39, 35, 0.06);
+    transition: var(--transition);
+  }
+
+  .nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--coffee-dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .logo-icon {
+    font-size: 1.8rem;
+    filter: drop-shadow(0 2px 4px rgba(62, 39, 35, 0.2));
+  }
+
+  .nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 36px;
+  }
+
+  .nav-menu a {
+    color: var(--coffee-dark);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    position: relative;
+    padding: 6px 0;
+    transition: var(--transition);
+  }
+
+  .nav-menu a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: var(--caramel);
+    transition: width 0.3s ease;
+  }
+
+  .nav-menu a:hover {
+    color: var(--caramel);
+  }
+
+  .nav-menu a:hover::after {
+    width: 100%;
+  }
+
+  .nav-menu a.active {
+    color: var(--caramel);
+  }
+
+  .nav-menu a.active::after {
+    width: 100%;
+  }
+
+  .burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 8px;
+  }
+
+  .burger span {
+    width: 26px;
+    height: 2px;
+    background: var(--coffee-dark);
+    border-radius: 2px;
+    transition: var(--transition);
+  }
+
+  /* ===== Шапка страницы меню ===== */
+  .menu-hero {
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background:
+      radial-gradient(ellipse at top left, rgba(201, 166, 107, 0.25), transparent 60%),
+      radial-gradient(ellipse at bottom right, rgba(111, 78, 55, 0.15), transparent 60%),
+      linear-gradient(135deg, var(--beige) 0%, var(--cream) 100%);
+    position: relative;
+    overflow: hidden;
+    padding: 100px 24px 60px;
+  }
+
+  .menu-hero::before {
+    content: '☕';
+    position: absolute;
+    font-size: 20rem;
+    opacity: 0.05;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .menu-hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    animation: fadeInUp 1s ease-out;
+  }
+
+  .menu-hero-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.7);
+    color: var(--coffee-brown);
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    margin-bottom: 24px;
+    border: 1px solid rgba(201, 166, 107, 0.3);
+  }
+
+  .menu-hero h1 {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    color: var(--coffee-dark);
+    margin-bottom: 24px;
+    letter-spacing: -1px;
+  }
+
+  .menu-hero h1 span {
+    color: var(--caramel);
+    font-style: italic;
+  }
+
+  .menu-hero p {
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    color: var(--coffee-medium);
+    margin-bottom: 30px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 16px 40px;
+    background: var(--coffee-brown);
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 8px 24px rgba(111, 78, 55, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+  }
+
+  .btn:hover::before {
+    width: 400px;
+    height: 400px;
+  }
+
+  .btn:hover {
+    background: var(--coffee-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(62, 39, 35, 0.4);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--coffee-brown);
+    border: 2px solid var(--coffee-brown);
+    box-shadow: none;
+    margin-left: 12px;
+  }
+
+  .btn-secondary:hover {
+    background: var(--coffee-brown);
+    color: var(--white);
+  }
+
+  .menu-hero-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ===== Меню ===== */
+  .menu {
+    background: var(--beige-light);
+  }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+
+  .menu-card {
+    background: var(--white);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+    transition: var(--transition);
+    cursor: pointer;
+    position: relative;
+  }
+
+  .menu-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .menu-card-image {
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition);
+  }
+
+  .menu-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .menu-card:nth-child(1) .menu-card-image { background: linear-gradient(135deg, #D4A574, #8B5E3C); }
+  .menu-card:nth-child(2) .menu-card-image { background: linear-gradient(135deg, #E8C39E, #A0785A); }
+  .menu-card:nth-child(3) .menu-card-image { background: linear-gradient(135deg, #F5D5A0, #C9A66B); }
+  .menu-card:nth-child(4) .menu-card-image { background: linear-gradient(135deg, #6F4E37, #3E2723); }
+  .menu-card:nth-child(5) .menu-card-image { background: linear-gradient(135deg, #8B5E3C, #4A2E1F); }
+  .menu-card:nth-child(6) .menu-card-image { background: linear-gradient(135deg, #A8C99B, #6B8E5A); }
+  .menu-card:nth-child(7) .menu-card-image { background: linear-gradient(135deg, #D4A574, #8B5E3C); }
+  .menu-card:nth-child(8) .menu-card-image { background: linear-gradient(135deg, #E8C39E, #A0785A); }
+  .menu-card:nth-child(9) .menu-card-image { background: linear-gradient(135deg, #F5D5A0, #C9A66B); }
+
+  .menu-card:hover .menu-card-image {
+    transform: scale(1.05);
+  }
+
+  .menu-card-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.1) 100%);
+  }
+
+  .menu-card-body {
+    padding: 24px;
+  }
+
+  .menu-card-title {
+    font-size: 1.4rem;
+    color: var(--coffee-dark);
+    margin-bottom: 8px;
+  }
+
+  .menu-card-desc {
+    color: var(--coffee-medium);
+    font-size: 0.9rem;
+    margin-bottom: 16px;
+    min-height: 42px;
+  }
+
+  .menu-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .menu-card-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--caramel);
+  }
+
+  .menu-card-btn {
+    background: var(--beige);
+    color: var(--coffee-dark);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .menu-card-btn:hover {
+    background: var(--coffee-brown);
+    color: var(--white);
+  }
+
+  /* ===== Десерты ===== */
+  .desserts {
+    background: linear-gradient(135deg, var(--beige) 0%, var(--cream) 100%);
+  }
+
+  .dessert-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+
+  .dessert-card {
+    background: var(--white);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+    transition: var(--transition);
+    position: relative;
+  }
+
+  .dessert-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .dessert-card-image {
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition);
+  }
+
+  .dessert-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .dessert-card:nth-child(1) .dessert-card-image { background: linear-gradient(135deg, #D4A574, #8B5E3C); }
+  .dessert-card:nth-child(2) .dessert-card-image { background: linear-gradient(135deg, #E8C39E, #A0785A); }
+  .dessert-card:nth-child(3) .dessert-card-image { background: linear-gradient(135deg, #F5D5A0, #C9A66B); }
+
+  .dessert-card:hover .dessert-card-image {
+    transform: scale(1.05);
+  }
+
+  .dessert-card-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.1) 100%);
+  }
+
+  .dessert-card-body {
+    padding: 24px;
+  }
+
+  .dessert-card-title {
+    font-size: 1.4rem;
+    color: var(--coffee-dark);
+    margin-bottom: 8px;
+  }
+
+  .dessert-card-desc {
+    color: var(--coffee-medium);
+    font-size: 0.9rem;
+    margin-bottom: 16px;
+    min-height: 42px;
+  }
+
+  .dessert-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .dessert-card-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--caramel);
+  }
+
+  .dessert-card-btn {
+    background: var(--beige);
+    color: var(--coffee-dark);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .dessert-card-btn:hover {
+    background: var(--coffee-brown);
+    color: var(--white);
+  }
+
+  /* ===== Футер ===== */
+  .footer {
+    background: var(--coffee-dark);
+    color: var(--beige);
+    padding: 40px 0 24px;
+    text-align: center;
+  }
+
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--caramel);
+  }
+
+  .footer-nav {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .footer-nav a {
+    color: var(--beige);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: var(--transition);
+  }
+
+  .footer-nav a:hover {
+    color: var(--caramel);
+  }
+
+  .footer-copy {
+    font-size: 0.85rem;
+    opacity: 0.7;
+    margin-top: 10px;
+  }
+
+  /* ===== Анимации ===== */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ===== Адаптивность ===== */
+  @media (max-width: 992px) {
+    .menu-grid,
+    .dessert-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    section {
+      padding: 70px 0;
+    }
+
+    .nav-menu {
+      position: fixed;
+      top: 72px;
+      left: 0;
+      right: 0;
+      background: var(--beige-light);
+      flex-direction: column;
+      padding: 30px;
+      gap: 20px;
+      transform: translateY(-150%);
+      transition: transform 0.4s ease;
+      box-shadow: 0 10px 30px rgba(62, 39, 35, 0.1);
+    }
+
+    .nav-menu.active {
+      transform: translateY(0);
+    }
+
+    .burger {
+      display: flex;
+    }
+
+    .burger.active span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .burger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .burger.active span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .menu-grid,
+    .dessert-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .menu-hero-buttons {
+      flex-direction: column;
+      width: 100%;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+
+    .btn-secondary {
+      margin-left: 0;
+    }
+
+    .btn {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .menu-hero {
+      padding: 80px 20px 50px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Навигация -->
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="logo">
+      <span class="logo-icon">🐱</span>
+      <span>Кофейный котик</span>
+    </a>
+    <ul class="nav-menu" id="navMenu">
+      <li><a href="index.html">Главная</a></li>
+      <li><a href="index.html#about">О нас</a></li>
+      <li><a href="menu.html" class="active">Меню</a></li>
+      <li><a href="index.html#promos">Акции</a></li>
+      <li><a href="index.html#contacts">Контакты</a></li>
+    </ul>
+    <button class="burger" id="burger" aria-label="Меню">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Шапка меню -->
+<section class="menu-hero" id="top">
+  <div class="menu-hero-content">
+    <span class="menu-hero-badge">☕ НАШЕ ПОЛНОЕ МЕНЮ</span>
+    <h1>Вкусы, которые <span>мурлычат</span></h1>
+    <p>Девять фирменных напитков и свежие десерты — каждый день готовим с любовью и щепоткой кошачьего любопытства.</p>
+    <div class="menu-hero-buttons">
+      <a href="#drinks" class="btn">К напиткам</a>
+      <a href="#desserts" class="btn btn-secondary">К десертам</a>
+    </div>
+  </div>
+</section>
+
+<!-- Напитки -->
+<section class="menu" id="drinks">
+  <div class="container">
+    <h2 class="section-title">Фирменные напитки</h2>
+    <p class="section-subtitle">Классика и авторские рецепты — каждый напиток можно сделать на любом молоке</p>
+    <div class="menu-grid">
+      <div class="menu-card">
+        <div class="menu-card-image"><img src="pictures/image1.jpg" alt="Мурр-чино"></div>
+        <div class="menu-card-body">
+          <h3 class="menu-card-title">Мурр-чино</h3>
+          <p class="menu-card-desc">Нежный капучино с карамельной пенкой и ноткой ванили</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">290 ₽</span>
+            <button class="menu-card-btn">Подробнее</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-image"><img src="pictures/image2.jpg" alt="Котик-латте"></div>
+        <div class="menu-card-body">
+          <h3 class="menu-card-title">Котик-латте</h3>
+          <p class="menu-card-desc">Латте с лавандовым сиропом и арт-рисунком в виде котика</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">320 ₽</span>
+            <button class="menu-card-btn">Подробнее</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-image"><img src="pictures/image3.jpg" alt="Мокрый носик"></div>
+        <div class="menu-card-body">
+          <h3 class="menu-card-title">Мокрый носик</h3>
+          <p class="menu-card-desc">Сливочный раф с мёдом, корицей и щепоткой мускатного ореха</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">350 ₽</span>
+            <button class="menu-card-btn">Подробнее</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-image"><img src="pictures/image1.jpg" alt="Бодрый хвостик"></div>
+        <div class="menu-card-body">
+          <h3 class="menu-card-title">Бодрый хвостик</h3>
+          <p class="menu-card-desc">Крепкий эспрессо из зёрен собственной обжарки</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">180 ₽</span>
+            <button class="menu-card-btn">Подробнее</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-image"><img src="pictures/image2.jpg" alt="Шоко-лапка"></div>
+        <div class="menu-card-body">
+          <h3 class="menu-card-title">Шоко-лапка</h3>
+          <p class="menu-card-desc">Бархатный мокко с бельгийским шоколадом и маршмеллоу</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">340 ₽</span>
+            <button class="menu-card-btn">Подробнее</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-image"><img src="pictures/image3.jpg" alt="Зеленые глазки"></div>
+        <div class="menu-card-body">
+          <h3 class="menu-card-title">Зеленые глазки</h3>
+          <p class="menu-card-desc">Матча-латте на овсяном молоке с кокосовым сиропом</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">360 ₽</span>
+            <button class="menu-card-btn">Подробнее</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-image"><img src="pictures/image1.jpg" alt="Утренний мурлык"></div>
+        <div class="menu-card-body">
+          <h3 class="menu-card-title">Утренний мурлык</h3>
+          <p class="menu-card-desc">Флэт уайт с двойной порцией эспрессо и сливочной пенкой</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">310 ₽</span>
+            <button class="menu-card-btn">Подробнее</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-image"><img src="pictures/image2.jpg" alt="Кошачья мята"></div>
+        <div class="menu-card-body">
+          <h3 class="menu-card-title">Кошачья мята</h3>
+          <p class="menu-card-desc">Освежающий айс-латте с мятным сиропом и льдом</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">330 ₽</span>
+            <button class="menu-card-btn">Подробнее</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-image"><img src="pictures/image3.jpg" alt="Пушистый какао"></div>
+        <div class="menu-card-body">
+          <h3 class="menu-card-title">Пушистый какао</h3>
+          <p class="menu-card-desc">Горячий какао на молоке с маршмеллоу и взбитыми сливками</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">280 ₽</span>
+            <button class="menu-card-btn">Подробнее</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Десерты -->
+<section class="desserts" id="desserts">
+  <div class="container">
+    <h2 class="section-title">Свежая выпечка</h2>
+    <p class="section-subtitle">Печём каждое утро — к кофе, к чаю и просто для хорошего настроения</p>
+    <div class="dessert-grid">
+      <div class="dessert-card">
+        <div class="dessert-card-image"><img src="pictures/image1.jpg" alt="Круассан с миндалём"></div>
+        <div class="dessert-card-body">
+          <h3 class="dessert-card-title">Круассан с миндалём</h3>
+          <p class="dessert-card-desc">Хрустящий круассан с миндальной начинкой и сахарной пудрой</p>
+          <div class="dessert-card-footer">
+            <span class="dessert-card-price">190 ₽</span>
+            <button class="dessert-card-btn">Подробнее</button>
+          </div>
+        </div>
+      </div>
+      <div class="dessert-card">
+        <div class="dessert-card-image"><img src="pictures/image2.jpg" alt="Чизкейк Нью-Йорк"></div>
+        <div class="dessert-card-body">
+          <h3 class="dessert-card-title">Чизкейк Нью-Йорк</h3>
+          <p class="dessert-card-desc">Классический сливочный чизкейк на песочной основе</p>
+          <div class="dessert-card-footer">
+            <span class="dessert-card-price">260 ₽</span>
+            <button class="dessert-card-btn">Подробнее</button>
+          </div>
+        </div>
+      </div>
+      <div class="dessert-card">
+        <div class="dessert-card-image"><img src="pictures/image3.jpg" alt="Морковный торт"></div>
+        <div class="dessert-card-body">
+          <h3 class="dessert-card-title">Морковный торт</h3>
+          <p class="dessert-card-desc">Влажный морковный торт с кремом из сливочного сыра</p>
+          <div class="dessert-card-footer">
+            <span class="dessert-card-price">240 ₽</span>
+            <button class="dessert-card-btn">Подробнее</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Футер -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-logo">🐱 Кофейный котик</div>
+      <div class="footer-nav">
+        <a href="index.html">← Вернуться на главную</a>
+        <a href="#top">Наверх ↑</a>
+      </div>
+      <p class="footer-copy">© 2026 Кофейный котик. Все права защищены. Сделано с любовью ☕</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Мобильное меню
+  const burger = document.getElementById('burger');
+  const navMenu = document.getElementById('navMenu');
+
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('active');
+    navMenu.classList.toggle('active');
+  });
+
+  // Закрытие меню при клике на ссылку
+  document.querySelectorAll('.nav-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+      burger.classList.remove('active');
+      navMenu.classList.remove('active');
+    });
+  });
+</script>
+
+</body>
+</html>
